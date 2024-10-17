@@ -6,11 +6,14 @@ const axios = require('axios');
 const BASE_URL_GET_ACTION = "http://api.ganharnoinsta.com/get_action.php";
 const BASE_URL_CONFIRM_ACTION = "http://api.ganharnoinsta.com/confirm_action.php";
 const TOKEN = "98664a53-aad2-4189-ad45-82fbda6624e7";
-const DADOS_PERFIL = "gkzx7_";
+const DADOS_PERFIL = "pedrosantos.zzx";
 const TIPO_DE_ACAO = "3";
 const SHA1 = "e5990261605cd152f26c7919192d4cd6f6e22227";
-const ID_CONTA = "63938549000";
+const ID_CONTA = "70089615846";
 let ID_PEDIDO;
+
+// Função para aguardar um tempo especificado (em milissegundos)
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 (async () => {
     try {
@@ -63,7 +66,7 @@ let ID_PEDIDO;
 
         // 3. Automação com Playwright
         console.log('[INFO] Carregando cookies...');
-        const cookies = JSON.parse(fs.readFileSync('gkzx7_.json', 'utf-8'));
+        const cookies = JSON.parse(fs.readFileSync('pedrosantos.zzx.json', 'utf-8'));
         console.log('[INFO] Cookies carregados com sucesso.');
 
         console.log('[INFO] Iniciando o navegador Chrome em modo headless...');
@@ -74,6 +77,10 @@ let ID_PEDIDO;
         console.log('[INFO] Definindo cookies no contexto do navegador...');
         await context.addCookies(cookies);
         console.log('[INFO] Cookies definidos com sucesso.');
+
+        // Aguardar 3 horas (10800000 milissegundos)
+        console.log('[INFO] Aguardando 3 horas antes de continuar com a automação...');
+        await delay(10800000);  // Pausa de 3 horas
 
         // Acessa o perfil do usuário a ser seguido
         const page = await context.newPage();
