@@ -1,0 +1,126 @@
+name: Run Playwright Instagram Automation
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'  # Use a versão Node.js desejada
+
+    - name: Install dependencies
+      run: |
+        npm install playwright axios
+
+    - name: Create and run script
+      run: |
+        cat << 'EOF' > instagram-script.js
+        const { chromium } = require('playwright');
+        const fs = require('fs');
+        const axios = require('axios');
+
+        const BASE_URL_GET_ACTION = "http://api.ganharnoinsta.com/get_action.php";
+        const BASE_URL_CONFIRM_ACTION = "http://api.ganharnoinsta.com/confirm_action.php";
+        const TOKEN = "98664a53-aad2-4189-ad45-82fbda6624e7";
+        const DADOS_PERFIL = " gkzx7_";
+        const TIPO_DE_ACAO = "3";
+        const SHA1 = "e5990261605cd152f26c7919192d4cd6f6e22227";
+        const ID_CONTA = "67137526940";
+        let ID_PEDIDO;
+
+        (async () => {
+            try {
+                console.log('[INFO] Iniciando o script de automação do Instagram.');
+
+                const responseGetAction = await axios.get(BASE_URL_GET_ACTION, {
+                    params: {
+                        token: TOKEN,
+                        sha1: SHA1,
+                        id_conta: ID_CONTA,
+                        is_instagram: 1,
+                        tipo: TIPO_DE_ACAO
+                    }
+                });
+
+                const actionData = responseGetAction.data;
+                ID_PEDIDO = actionData.id_pedido;
+                const userToFollow = actionData.nome_usuario;
+
+                if (!ID_PEDIDO || !userToFollow) {
+                    console.error('[ERROR] Não foi possível obter o ID do pedido ou o usuário da API.');
+                    process.exit(1);
+                }
+
+                const responsePreConfirmAction = await axios.get(BASE_URL_CONFIRM_ACTION, {
+                    params: {
+                        token: TOKEN,
+                        sha1: SHA1,
+                        id_conta: ID_CONTA,
+                        id_pedido: ID_PEDIDO,
+                        is_instagram: 1
+                    }
+                });
+
+                if (responsePreConfirmAction.data.message !== 'CONFIRMOU_SUCESSO') {
+                    console.error('[ERROR] Falha na confirmação preliminar da ação:', responsePreConfirmAction.data);
+                    process.exit(1);
+                }
+
+                const cookies = JSON.parse(fs.readFileSync('gkzx7_.json', 'utf-8'));
+
+                const browser = await chromium.launch({ headless: true });
+                const context = await browser.newContext();
+                await context.addCookies(cookies);
+
+                const page = await context.newPage();
+                const profileUrl = `https://www.instagram.com/${userToFollow}/`;
+                await page.goto(profileUrl, { timeout: 999999 });
+                await page.waitForTimeout(3000);
+
+                for (let i = 0; i < 3; i++) {
+                    await page.keyboard.press('Tab');
+                    await page.waitForTimeout(500);
+                }
+
+                await page.keyboard.press('Enter');
+                await browser.close();
+
+                const responseConfirmAction = await axios.get(BASE_URL_CONFIRM_ACTION, {
+                    params: {
+                        token: TOKEN,
+                        sha1: SHA1,
+                        id_conta: ID_CONTA,
+                        id_pedido: ID_PEDIDO,
+                        is_instagram: 1
+                    }
+                });
+
+                if (responseConfirmAction.data.status !== 'SUCESSO') {
+                    console.error('[ERROR] Falha na confirmação final da ação:', responseConfirmAction.data);
+                    process.exit(1);
+                }
+
+                console.log('[INFO] Ação final confirmada com sucesso:', responseConfirmAction.data);
+            } catch (error) {
+                console.error('[ERROR] Ocorreu um erro durante a execução do script:', error);
+                process.exit(1);
+            }
+        })();
+        EOF
+
+        # Criar arquivo de cookies temporário
+        echo '[{ "name": "cookieName", "value": "cookieValue", "domain": ".instagram.com", "path": "/" }]' > 0000000000000000000000000000000000000000000000000000000000.json
+
+        # Executar o script
+        node instagram-script.js
