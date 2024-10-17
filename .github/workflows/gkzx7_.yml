@@ -25,4 +25,4 @@ jobs:
         npm install axios
 
     - name: Run Playwright Instagram automation
-      run: node your-script.js
+      run: node gkzx7_.js
