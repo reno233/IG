@@ -9,7 +9,7 @@ const TOKEN = "98664a53-aad2-4189-ad45-82fbda6624e7";
 const DADOS_PERFIL = "gkzx7_";
 const TIPO_DE_ACAO = "3";
 const SHA1 = "e5990261605cd152f26c7919192d4cd6f6e22227";
-const ID_CONTA = "67137526940";
+const ID_CONTA = "63938549000";
 let ID_PEDIDO;
 
 (async () => {
