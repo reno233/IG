@@ -21,6 +21,7 @@ jobs:
 
     - name: Install dependencies
       run: |
+        npx playwright install
         npm install playwright
         npm install axios
 
