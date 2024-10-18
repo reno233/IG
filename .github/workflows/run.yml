@@ -17,7 +17,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '14'  # Use a versão Node.js desejada
+        node-version: '14'
 
     - name: Install dependencies
       run: |
@@ -25,5 +25,8 @@ jobs:
         npm install playwright
         npm install axios
 
-    - name: Run Playwright Instagram automation
-      run: node gkzx7_.js
+    - name: Run Playwright Instagram automation for pedrosantos.zzx
+      run: node pedrosantos.zzx.js
+
+    - name: Run Playwright Instagram automation for ivanturner4077
+      run: node ivanturner4077.js
