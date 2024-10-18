@@ -1,4 +1,4 @@
-name: Run Playwright Instagram Automation
+name: Instagram Automation
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-script-gkzx7:
+  script1:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,10 +25,10 @@ jobs:
         npm install playwright
         npm install axios
 
-    - name: Run Playwright Instagram automation for gkzx7_
+    - name: conta 1
       run: node pedrosantos.zzx.js
 
-  run-script-another:
+  script2:
     runs-on: ubuntu-latest
 
     steps:
@@ -46,5 +46,48 @@ jobs:
         npm install playwright
         npm install axios
 
-    - name: Run Playwright Instagram automation for another_script
+    - name: conta 2
       run: node ivanturner4077.js
+
+  script3:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: |
+        npx playwright install
+        npm install playwright
+        npm install axios
+
+    - name: conta 3
+      run: node ivanturner4077.js
+
+  script4:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: |
+        npx playwright install
+        npm install playwright
+        npm install axios
+
+    - name: conta 4
+      run: node gkzx7_.js
+
