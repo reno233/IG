@@ -15,7 +15,8 @@ let ID_PEDIDO;
 // Função para aguardar um tempo especificado (em milissegundos)
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-(async () => {
+// Função principal encapsulada
+async function runAutomation() {
     try {
         console.log('[INFO] Iniciando o script de automação do Instagram.');
 
@@ -38,8 +39,7 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
         const userToFollow = actionData.nome_usuario;
 
         if (!ID_PEDIDO || !userToFollow) {
-            console.error('[ERROR] Não foi possível obter o ID do pedido ou o usuário da API.');
-            process.exit(1);
+            throw new Error('[ERROR] Não foi possível obter o ID do pedido ou o usuário da API.');
         }
 
         console.log('[INFO] Dados da ação recebidos com sucesso:', actionData);
@@ -58,8 +58,7 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
         console.log('[DEBUG] Resposta da API de confirmação preliminar:', responsePreConfirmAction.data);
         if (responsePreConfirmAction.data.message !== 'CONFIRMOU_SUCESSO') {
-            console.error('[ERROR] Falha na confirmação preliminar da ação:', responsePreConfirmAction.data);
-            process.exit(1);
+            throw new Error('[ERROR] Falha na confirmação preliminar da ação.');
         }
 
         console.log('[INFO] Ação preliminar confirmada com sucesso.');
@@ -120,13 +119,36 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
         console.log('[DEBUG] Resposta da API de confirmação final:', responseConfirmAction.data);
 
         if (responseConfirmAction.data.status !== 'SUCESSO') {
-            console.error('[ERROR] Falha na confirmação final da ação:', responseConfirmAction.data);
-            process.exit(1);
+            throw new Error('[ERROR] Falha na confirmação final da ação.');
         }
 
         console.log('[INFO] Ação final confirmada com sucesso:', responseConfirmAction.data);
     } catch (error) {
-        console.error('[ERROR] Ocorreu um erro durante a execução do script:', error);
-        process.exit(1);
+        console.error('[ERROR] Ocorreu um erro durante a execução do script:', error.message);
+        throw error; // Lança o erro para que o loop de retry possa capturá-lo e reiniciar a execução
     }
-})();
+}
+
+// Função para gerenciar as tentativas automáticas de reinicialização
+async function executeWithRetry(retries) {
+    for (let attempt = 1; attempt <= retries; attempt++) {
+        try {
+            console.log(`[INFO] Tentativa ${attempt} de ${retries}...`);
+            await runAutomation();
+            console.log('[INFO] Automação concluída com sucesso!');
+            break; // Se a execução for bem-sucedida, sai do loop
+        } catch (error) {
+            console.error(`[ERROR] Erro na tentativa ${attempt}:`, error.message);
+            if (attempt === retries) {
+                console.error('[ERROR] Todas as tentativas falharam. Abortando.');
+                process.exit(1);
+            } else {
+                console.log('[INFO] Reiniciando a automação...');
+                await delay(5000); // Aguardar 5 segundos antes de tentar novamente
+            }
+        }
+    }
+}
+
+// Iniciar a automação com até 5 tentativas
+executeWithRetry(5);
