@@ -77,8 +77,8 @@ async function runAutomation() {
         await context.addCookies(cookies);
         console.log('[INFO] Cookies definidos com sucesso.');
 
-        // Aguardar 3 horas (10800000 milissegundos)
-        console.log('[INFO] Aguardando 3 horas antes de continuar com a automação...');
+        // Aguardar 3 horas (10800000 milissegundos) APÓS aplicar os cookies
+        console.log('[INFO] Aguardando 3 horas após definir os cookies...');
         await delay(10800000);  // Pausa de 3 horas
 
         // Acessa o perfil do usuário a ser seguido
@@ -150,5 +150,5 @@ async function executeWithRetry(retries) {
     }
 }
 
-// Iniciar a automação com até 5 tentativas
-executeWithRetry(5);
+// Iniciar a automação com até 999 tentativas
+executeWithRetry(999);
