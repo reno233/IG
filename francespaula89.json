@@ -1,0 +1,102 @@
+[
+    {
+        "name": "wd",
+        "value": "1366x651",
+        "domain": ".instagram.com",
+        "path": "/",
+        "expires": 1729986254,
+        "httpOnly": false,
+        "secure": true,
+        "sameSite": "Lax"
+    },
+    {
+        "name": "mid",
+        "value": "ZxRCigALAAHs0C42RCM6m39PqHqC",
+        "domain": ".instagram.com",
+        "path": "/",
+        "expires": 1763940960,
+        "httpOnly": false,
+        "secure": true,
+        "sameSite": "Lax"
+    },
+    {
+        "name": "ig_did",
+        "value": "9BE40230-894B-4A5E-B5A5-0F995AC905B0",
+        "domain": ".instagram.com",
+        "path": "/",
+        "expires": 1760916982.873003,
+        "httpOnly": true,
+        "secure": true,
+        "sameSite": "Lax"
+    },
+    {
+        "name": "datr",
+        "value": "iUIUZyX2hdsG-qRn7Tt76vgS",
+        "domain": ".instagram.com",
+        "path": "/",
+        "expires": 1763940964.433044,
+        "httpOnly": true,
+        "secure": true,
+        "sameSite": "None"
+    },
+    {
+        "name": "ig_nrcb",
+        "value": "1",
+        "domain": ".instagram.com",
+        "path": "/",
+        "expires": 1760916982.873917,
+        "httpOnly": false,
+        "secure": true,
+        "sameSite": "Lax"
+    },
+    {
+        "name": "csrftoken",
+        "value": "mH6xRPsbB7VTazyU5QKlHF92yrTMNFmy",
+        "domain": ".instagram.com",
+        "path": "/",
+        "expires": 1760831065.268391,
+        "httpOnly": false,
+        "secure": true,
+        "sameSite": "Lax"
+    },
+    {
+        "name": "ds_user_id",
+        "value": "67489190817",
+        "domain": ".instagram.com",
+        "path": "/",
+        "expires": 1737157465.269206,
+        "httpOnly": false,
+        "secure": true,
+        "sameSite": "Lax"
+    },
+    {
+        "name": "sessionid",
+        "value": "67489190817%3AWLUuNCNMuVvdV4%3A18%3AAYeymMRDsMZwP_7r6CgIBsulxuikucfX1CtbxRuREQ",
+        "domain": ".instagram.com",
+        "path": "/",
+        "expires": 1760917052.192882,
+        "httpOnly": true,
+        "secure": true,
+        "sameSite": "Lax"
+    },
+    {
+        "name": "fr",
+        "value": "0nTAp6xywbDNvBhou.AWX76udPhp_E3bfkqi-Dxx_GEhk.BnFEQn..AAA.0.0.BnFEQn.AWU2S-fM6ys",
+        "domain": ".facebook.com",
+        "path": "/",
+        "expires": 1737157354.265851,
+        "httpOnly": true,
+        "secure": true,
+        "sameSite": "None"
+    },
+    {
+        "name": "rur",
+        "value": "\"NHA\\05467489190817\\0541760917526:01f746d021ed714daac6e364c392361a29fcb0c95a12faa2bb161f3a698807578b0cc4ac\"",
+        "domain": ".instagram.com",
+        "path": "/",
+        "expires": -1,
+        "httpOnly": true,
+        "secure": true,
+        "sameSite": "Lax"
+    }
+]
